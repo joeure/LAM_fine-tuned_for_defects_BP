@@ -1,0 +1,51 @@
+{% for system in system_infos %}
+
+# ======================= Initialization =======================
+units           metal                 # eV, Å (matches MACE docs)
+atom_style      atomic
+atom_modify     map yes               # consistent atom IDs (MACE docs)
+newton          on
+boundary        p p p
+
+neighbor        2.0 bin
+neigh_modify    every 1 delay 0 check yes  # recommended for minimize
+
+# ====================== Read Structure ======================
+read_data {{ system.structure_file }}
+
+# ===== MACE potential (TorchScript .pt) =====================
+# Use a model converted with create_lammps_model.py → *.model-lammps.pt
+pair_style      mace/kk no_domain_decomposition
+pair_coeff      * * {{ system.model_file }} {% for elem in system.elements %}{{ elem }} {% endfor %}
+
+# sanitize a per-system name and make a system-specific folder
+variable sysname string {{ system.dump_name | replace(' ','_') | replace('/','_') }}
+
+shell mkdir -p dumps/${sysname}    # create the directory on rank 0
+# (works with the built-in 'shell' command)
+
+# write every minimization iteration (incl. the initial & final frames)
+dump        d1 all custom 1 dumps/${sysname}/traj.lammpstrj id type x y z fx fy fz
+dump_modify d1 first yes sort id
+
+# concise thermo each iteration
+thermo      1
+thermo_style custom step pe fmax fnorm
+
+# minimizer (Kokkos version since your build has cg/kk)
+min_style   cg/kk
+min_modify  dmax 0.03 line quadratic
+minimize    1.0e-8 {{system.ftol}} 10000 100000   # etol ftol maxiter maxeval
+# NOTE: LAMMPS ftol is an upper bound on any force *component* (eV/Å),
+# so ftol=0.010 is a close match to VASP’s |F|max ≤ 0.01 eV/Å target.
+
+# ======================= Output =============================
+write_data      {{ system.output_file }}
+print           "Relaxation complete for {{ system.system_name }} -> {{ system.output_file }}"
+
+{% if not loop.last %}
+clear
+{% endif %}
+
+{% endfor %}
+print "End for systems bundle: {{ total_name }}."

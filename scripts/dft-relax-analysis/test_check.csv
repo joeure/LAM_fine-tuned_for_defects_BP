@@ -1,0 +1,3 @@
+cif_id,file_used,n_frames,converged_ionic,converged_electronic,converged,error
+P_P137N5_b9f572f6-66a3-4b07-a56e-0a741399944b_relaxed,vasprun.xml,118,1,True,1,
+__TOTAL__,1/1 have files,118,1,,1,0

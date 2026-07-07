@@ -1,0 +1,19 @@
+# Sanitized environment notes
+
+This file is kept only as a reminder of the software categories checked before
+DPA-3 fine-tuning. Concrete server, GPU, driver, kernel, container, and absolute
+interpreter paths from the original run have been removed.
+
+Example fields to record for a private reproducibility log:
+
+- Python version: `<PYTHON_VERSION>`
+- DeepMD-kit version: `<DEEPMD_VERSION>`
+- PyTorch version: `<PYTORCH_VERSION>`
+- CUDA runtime/build version: `<CUDA_VERSION>`
+- ASE / dpdata / NumPy / SciPy / pandas versions: `<PACKAGE_VERSIONS>`
+- GPU type/count: `<GPU_RESOURCE_SUMMARY>`
+- Container or module image: `<RUNTIME_IMAGE_OR_MODULE>`
+- Training command/config: `<TRAINING_COMMAND_OR_CONFIG>`
+
+Do not commit cluster-specific driver output, container mount paths, scheduler
+job IDs, or cloud machine-type identifiers to this public repository.

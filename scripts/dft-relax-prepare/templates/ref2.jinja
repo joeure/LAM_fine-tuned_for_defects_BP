@@ -1,0 +1,34 @@
+SYSTEM   = BP_P_P134N4_1fe3516f-1738-48a9-9e5e-18be3c987e21_relaxed
+ENCUT    = 525
+EDIFF    = 1E-5
+
+NBANDS = 460 # let the default value be used, it's safer
+NCORE    = 8  # it' better to check, this is only for safety
+
+ISMEAR   = 1   ; SIGMA = 0.2
+LREAL    = Auto
+NELM    = 200  # for safety, set to 120 for formal running
+ALGO    = Fast
+AMIX     = 0.10          # ↓ from default 0.40
+AMIX_MAG = 0.10
+BMIX     = 0.001         # Kerker cutoff, stronger damping
+BMIX_MAG = 0.001
+AMIN     = 0.01          # keep some mixing even if AMIX shrinks
+PREC     = Normal
+
+# ---- single-point only ----
+IBRION   = -1             # no ionic moves, static calculation
+NSW      = 0
+ISIF     = 2              # keep cell fixed, write stress
+
+# ---- 2-D specific ----
+LDIPOL   = .TRUE.         # turn on dipole correction
+IDIPOL   = 3              # perpendicular to layer (z)
+
+# ---- SPIN ----
+ISPIN    = 2              # set open for all systems robust
+MAGMOM   = 134*0.01 4*0.5    # initial magnetic moments guess
+
+# ---- book-keeping ----
+LWAVE    = .FALSE.        # no WAVECAR
+LCHARG   = .FALSE.        # no CHGCAR

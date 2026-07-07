@@ -1,0 +1,33 @@
+{
+  "source": "learned",
+  "label_names": [
+    "AC",
+    "ZZ"
+  ],
+  "ac_vector_3d": [
+    0.4438352016880766,
+    0.8961084274475408,
+    0.0
+  ],
+  "zz_vector_3d": [
+    0.8674829633046086,
+    -0.4974668917387922,
+    0.0
+  ],
+  "plane_normal_3d": [
+    0.0,
+    -0.0,
+    1.0
+  ],
+  "mixed_angle_deg": 10.0,
+  "diag_pristine_learned_label_counts": {
+    "D0": 2304,
+    "D1": 2016,
+    "MIXED": 432
+  },
+  "diag_pristine_old_label_counts": {
+    "AC": 1296,
+    "ZZ": 1728,
+    "MIXED": 1728
+  }
+}

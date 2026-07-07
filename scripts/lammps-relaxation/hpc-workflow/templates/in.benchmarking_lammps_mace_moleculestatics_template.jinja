@@ -1,0 +1,42 @@
+{% for system in system_infos %}
+
+# ======================= Initialization =======================
+units           real
+atom_style      atomic
+neighbor        2.0 bin
+neigh_modify    every 1 delay 0 check yes
+atom_modify     map yes                             # ensure consistent atom IDs
+newton        on
+
+# ====================== Read Structure ======================
+read_data {{ system.structure_file }}
+# Note: Ensure the structure file is in the correct format for LAMMPS
+
+# ===== Necessary map and domain settings for MACE ===========
+pair_style      mace/kk no_domain_decomposition        # recommended when using few MPI tasks
+pair_coeff      * * {{ system.model_file }} {% for elem in system.elements %}{{ elem }} {% endfor %}  # specify the elements in the model file
+
+# ================== Energy Minimization ====================
+min_style       cg     # conjugate gradient minimizer 
+# min_modify      dmax 0.1 line_search yes
+minimize        1e-6 1e-8 10000 100000             # etol, ftol, maxiter, maxeval
+
+# ======================= Output ==============================
+print           "Minimization complete For {{ system.system_name }} and {{ system.output_file }} with MACE"
+# ===================== Write Output =========================
+write_data      {{ system.output_file }}  # write the minimized structure to a new file
+
+{% if not loop.last %}
+# ======================= End of System =======================
+
+clear # Clear the current system to prepare for the next one
+
+# ======================= Next System ========================
+
+{% endif %}
+
+{% endfor %}
+print           "End for the systems in the bundle: {{total_name}}."
+# ======================= End of File =========================
+# This file is auto-generated for LAMMPS MACE molecular statics simulations.
+# Ensure to check the output and adjust parameters as necessary.

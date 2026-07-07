@@ -1,0 +1,10 @@
+{
+  "job_name": "example_mace_bp_finetune",
+  "job_type": "container",
+  "command": "OMP_NUM_THREADS=${OMP_NUM_THREADS:-1} python -m mace.cli.run_train --config swa.yaml --device cuda --name example_mace_finetune --pt_train_file replay_omat_np_30k_remap_fp32.xyz",
+  "backward_files": [],
+  "project_id": 0,
+  "platform": "<CLOUD_PLATFORM>",
+  "machine_type": "<EXAMPLE_MACHINE_TYPE>",
+  "image_address": "<MACE_IMAGE_ADDRESS>"
+}

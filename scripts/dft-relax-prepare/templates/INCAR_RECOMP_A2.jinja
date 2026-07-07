@@ -1,0 +1,44 @@
+SYSTEM   = {{ systemName }}
+ENCUT    = {{ encut }}            # >= 1.3*ENMAX recommended for relax quality
+EDIFF    = 1E-6                   # tighter electronic conv. for relax
+
+# -------- performance knobs -------- #
+{% if ideal %}
+{% if isNotTest %}
+NBANDS   = {{ nbands }}           # optional; otherwise let VASP choose
+NCORE    = 2
+{% endif %}
+{% else %}
+NBANDS   = {{ nbands }}
+NCORE    = 2
+{% endif %}
+# Metal vs. semiconductor smearing
+ISMEAR   = 0   ; SIGMA = 0.05
+LREAL    = Auto                 # Auto for big cells, .FALSE. for small cells
+NELM     = 120                 # e.g. 120 for formal runs
+ALGO     = Fast                # keep your original (OK for finish)
+
+AMIX     = 0.20
+BMIX     = 0.0001
+
+PREC     = Normal
+
+# ---- ionic relaxation (positions only) ----
+IBRION   = 2                    # CHANGED: back to CG to polish
+NSW      = 400                  # CHANGED: extra room to avoid early stop
+ISIF     = 2                    # relax ions, keep cell fixed
+EDIFFG   = -0.01                # same strict target
+POTIM    = 0.10                 # CHANGED: a bit larger than 0.03 so it actually moves
+
+# ---- 2-D specific ----
+LDIPOL   = .TRUE.               # dipole correction for asymmetric slabs
+IDIPOL   = 3                    # along z (c-axis)
+# DIPOL  = 0.5 0.5 0.5          # set center if needed
+
+# ---- SPIN ----
+ISPIN    = 2
+MAGMOM   = {{ magmom }}         # e.g. "1*0.5 179*0.0" or per-element blocks
+
+# ---- book-keeping ----
+LWAVE    = .FALSE.
+LCHARG   = .FALSE.

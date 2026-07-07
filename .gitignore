@@ -2,6 +2,7 @@
 __pycache__/
 *.py[codz]
 *$py.class
+.DS_Store
 
 # C extensions
 *.so
@@ -216,3 +217,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Large research artifacts distributed via DOI-backed archives, not Git.
+data/MACE-data/*.xyz
+
+# Upstream foundation weights should be retrieved from their original sources.
+models/foundation/*
+!models/foundation/README.md

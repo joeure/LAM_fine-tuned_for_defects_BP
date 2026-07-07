@@ -1,0 +1,10 @@
+{
+  "job_name": "example_dpa3_bp_finetune_chain",
+  "job_type": "container",
+  "command": "bash ./chain-resume.sh",
+  "backward_files": [],
+  "project_id": 0,
+  "platform": "<CLOUD_PLATFORM>",
+  "machine_type": "<EXAMPLE_MACHINE_TYPE>",
+  "image_address": "<DEEPMD_IMAGE_ADDRESS>"
+}

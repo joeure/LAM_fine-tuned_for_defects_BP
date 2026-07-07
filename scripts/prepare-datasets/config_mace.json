@@ -1,0 +1,23 @@
+{
+    "vasp_roots": [
+        "data/raw-vasp/BP_1014"
+    ],
+    "out_train": "data/MACE-data/MergeBPTrain_fp32.xyz",
+    "out_val": "data/MACE-data/MergeBPVal_fp32.xyz",
+    "out_test": "data/MACE-data/MergeBPTest_fp32.xyz",
+    "out_train_csv": "metadata/train-mace.csv",
+    "out_val_csv": "metadata/val-mace.csv",
+    "out_test_csv": "metadata/test-mace.csv",
+    "test_csv": "metadata/test_ids.csv",
+    "ood_csv": "metadata/ood_per_cif.csv",
+    "val_size": 0.1,
+    "ood_col": "ood_knn_cosine",
+    "seed": 31,
+    "include_virials": true,
+    "shards_dir": "metadata/splits/mace",
+    "chain_if_unconverged_only": true,
+    "ndef_meta_csv": "metadata/BP_defects.csv",
+    "ndef_shards_dir": "metadata/splits_ndef/mace",
+    "train_csv": "metadata/train-mace.csv",
+    "val_csv": "metadata/val-mace.csv"
+}

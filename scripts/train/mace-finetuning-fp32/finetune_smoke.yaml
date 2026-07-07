@@ -1,0 +1,88 @@
+# ---------- foundation model ----------
+foundation_model: mace-mpa-0-medium-fp32.model
+default_dtype: float32 # to avoid OOM of the GPU
+# restart_latest: trues
+
+# ---------- heads dictionary ----------
+multiheads_finetuning: true
+heads:
+  mpa_definet_ft_head:
+    train_file:   ./MergeBPTrain_fp32.xyz
+    valid_file:   ./MergeBPVal_fp32.xyz
+    test_file:    ./MergeBPTest_fp32.xyz
+    E0s:          ./e0s.json
+    weight:       0.3
+    energy_key:   REF_energy
+    forces_key:   REF_forces
+    stress_key:   REF_stress
+  pt_head:
+    train_file: replay_mpa_np_30k_remap_fp32.xyz
+    valid_fraction: 0.05
+    weight: 0.05
+    E0s: foundation  
+    energy_key: REF_energy
+    # subtract_e0: false
+    forces_key: REF_forces
+    stress_key: REF_stress
+
+# ---------- loss weights ----------
+forces_weight:     30
+energy_weight:     5
+stress_weight:     0
+
+# ---------- optimisation ----------
+optimizer:      adam               # ← Adam preferred for FT
+lr: 8.0e-5                         # ↑ faster convergence
+force_mh_ft_lr: true               # override MH default
+
+ema: false                            # EMA and SWA only turn on one, not both
+# ema:            true
+# ema_decay:      0.999               # smoother, quicker averaging
+
+# Scheduler: ExponentialLR only (remove plateau-only knobs)
+lr_scheduler_gamma: 0.917             # ← needed only for ExponentialLR LR at SWA start is ~3–5× lower than the base
+## max_num_epochs = 20, γ≈0.25 ^ 1/16 ≈ 0.917. max_num_epochs=40, γ≈0.25^1/32≈0.958
+# lr_factor:       0.5               # Just no use and replaced by lr_scheduler_gamma
+weight_decay:   5.0e-7
+scheduler:      ExponentialLR
+
+# # --- stage two / "SWA" ---
+swa: false            # or: stage_two: true (same feature in newer docs)
+# start_swa: 32        # last ~20% of epochs ses SWA in the last 20–30% of epochs
+# swa_lr: 2.0e-5       # ~0.2 × your base lr (5e-4 → 1e-4) swa_lr ≈ 0.2 × base_lr
+
+# swa_energy_weight: 10     # ↑ energy emphasis in stage two # not too much
+# swa_forces_weight: 30     # keep or slightly reduce vs. your base 30
+# swa_stress_weight: 0
+
+max_num_epochs: 10
+# if change, then change start_swa, patience and lr_scheduler_gamma
+patience:       3      # ≈ ¼ 总 epoch patience ≈ 20–30% of total epochs.
+num_workers:       6
+
+# --- replay subset -------------------------------------------------
+num_samples_pt: 30000             # ← focus on 400 MP traj samples
+subselect_pt:   fps
+# filtering_type: combinations
+
+# ---------- checkpointing / retention ----------
+# save_checkpoint: true
+# checkpoint_interval: 10           # save every N epochs, 2~3
+# keep_last_checkpoints: 1         # keep last K to pick 4 late ckpts
+# save_best_by: null     # ensure trainer emits this metric per target head
+# save_best_k: 0                   # optional: also keep top-K best by metric
+
+# only --save_all_checkpoints (boolean)
+
+# plot: false
+# plot_frequency: 5 # set this frequency to keep track! if not right just stop early
+
+# ---------- data loader / memory ----------
+batch_size: 16
+valid_batch_size: 16
+num_workers: 12                   # single, consistent setting
+r_max: 6.0
+
+# ---------- data ----------
+atomic_numbers: "[89,47,13,18,33,79,5,56,4,83,35,6,20,48,58,17,27,24,55,29,66,68,63,9,26,31,64,32,1,2,72,80,67,53,49,77,19,36,57,3,71,12,25,42,7,11,41,60,10,28,93,8,76,15,91,82,46,61,59,78,94,37,75,45,44,16,51,21,34,14,62,50,38,73,65,43,52,90,22,81,69,92,23,74,54,39,70,30,40]"
+seed:            42  # need to control for uncertainty

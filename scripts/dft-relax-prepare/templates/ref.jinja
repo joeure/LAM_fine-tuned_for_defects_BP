@@ -1,0 +1,20 @@
+SYSTEM  = Y atom
+ENCUT   = 525          # identical to bulk
+
+ISPIN   = 2            # spin polarised
+MAGMOM  = 1*2
+
+EDIFF   = 1E-5           # the same or more strict
+PREC    = Normal
+
+ISMEAR  = 0 ; SIGMA = 0.05
+# This setting is for the discrete isolated type of Fermi Surface
+
+ALGO    = Fast
+LREAL   = .FALSE.    # or setting Auto, it will show a banner and fall back into false.
+
+IBRION  = -1 ; NSW = 0
+# This is not for keeping the same, but this condition is just also suitable for an isolation calculation
+
+LWAVE   = .FALSE.
+LCHARG  = .FALSE.

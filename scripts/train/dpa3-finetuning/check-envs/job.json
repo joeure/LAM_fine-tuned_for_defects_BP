@@ -1,0 +1,10 @@
+{
+  "job_name": "example_check_dpa3_environment",
+  "job_type": "container",
+  "command": "source ./check_versions.sh && python ./check_versions.py",
+  "backward_files": [],
+  "project_id": 0,
+  "platform": "<CLOUD_PLATFORM>",
+  "machine_type": "<EXAMPLE_MACHINE_TYPE>",
+  "image_address": "<DEEPMD_IMAGE_ADDRESS>"
+}

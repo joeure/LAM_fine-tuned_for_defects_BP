@@ -1,0 +1,68 @@
+{
+    "systems": [
+        {
+            "name": "MoS2",
+            "resultsDir": "<LAMMPS_RESULTS_ROOT>/low_density_defects",
+            "outputDir": "<LAMMPS_OUTPUT_ROOT>/postprocess",
+            "dataTypes": [
+                "train", "val", "test"
+            ]
+        },
+        {
+            "name": "WSe2",
+            "resultsDir": "<LAMMPS_RESULTS_ROOT>/low_density_defects",
+            "outputDir": "<LAMMPS_OUTPUT_ROOT>/postprocess",
+            "dataTypes": [
+                "train", "val", "test"
+            ]
+        },
+        {
+            "name": "MoS2_500",
+            "resultsDir": "<LAMMPS_RESULTS_ROOT>/high_density_defects",
+            "outputDir": "<LAMMPS_OUTPUT_ROOT>/postprocess",
+            "dataTypes": [
+                "train", "val", "test"
+            ]
+        },
+        {
+            "name": "WSe2_500",
+            "resultsDir": "<LAMMPS_RESULTS_ROOT>/high_density_defects",
+            "outputDir": "<LAMMPS_OUTPUT_ROOT>/postprocess",
+            "dataTypes": [
+                "train", "val", "test"
+            ]
+        },
+        {
+            "name": "InSe_spin_500",
+            "resultsDir": "<LAMMPS_RESULTS_ROOT>/high_density_defects",
+            "outputDir": "<LAMMPS_OUTPUT_ROOT>/postprocess",
+            "dataTypes": [
+                "train", "val", "test"
+            ]
+        },
+        {
+            "name": "hBN_spin_500",
+            "resultsDir": "<LAMMPS_RESULTS_ROOT>/high_density_defects",
+            "outputDir": "<LAMMPS_OUTPUT_ROOT>/postprocess",
+            "dataTypes": [
+                "train", "val", "test"
+            ]
+        },
+        {
+            "name": "GaSe_spin_500",
+            "resultsDir": "<LAMMPS_RESULTS_ROOT>/high_density_defects",
+            "outputDir": "<LAMMPS_OUTPUT_ROOT>/postprocess",
+            "dataTypes": [
+                "train", "val", "test"
+            ]
+        },
+        {
+            "name": "BP_spin_500",
+            "resultsDir": "<LAMMPS_RESULTS_ROOT>/high_density_defects",
+            "outputDir": "<LAMMPS_OUTPUT_ROOT>/postprocess",
+            "dataTypes": [
+                "train", "val", "test"
+            ]
+        }
+    ]
+}

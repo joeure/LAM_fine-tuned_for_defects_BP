@@ -1,0 +1,5 @@
+event_family,endpoint_unique_events,endpoint_job_calculations,neb_unique_events,neb_job_calculations
+far-AC,6,7,4,16
+far-ZZ,8,8,6,10
+near-N,4,6,4,12
+escape,10,15,8,15

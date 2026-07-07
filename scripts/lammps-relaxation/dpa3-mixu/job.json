@@ -1,0 +1,13 @@
+{
+  "job_name": "example_dpa3_lammps_relax_eval",
+  "job_type": "container",
+  "command": "bash ./benchmark_batch.sh",
+  "backward_files": [],
+  "project_id": 0,
+  "platform": "<CLOUD_PLATFORM>",
+  "machine_type": "<EXAMPLE_MACHINE_TYPE>",
+  "dataset_path": [
+    "<BOHRIUM_DATASET_PATH>"
+  ],
+  "image_address": "<DEEPMD_LAMMPS_IMAGE_ADDRESS>"
+}

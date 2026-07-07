@@ -1,0 +1,16 @@
+Sanitized DeepMD branch-list excerpt.
+Threading should be configured by users through OMP_NUM_THREADS,
+DP_INTRA_OP_PARALLELISM_THREADS, and DP_INTER_OP_PARALLELISM_THREADS.
+
+This is a multitask model.
+Available model branches are [
+    'Domains_Alloy', 
+    'Domains_Anode', 
+    'Domains_Cluster', 
+    'Domains_Drug', 
+    'Domains_FerroEle', 
+    'Domains_SSE_PBE', 
+    'Domains_SemiCond', 
+    'H2O_H2O_PD', 
+    'Metals_AlMgCu', 
+    'Metals_Sn', 'Metals_Ti', 'Metals_V', 'Metals_W', 'Others_HfO2', 'Domains_SSE_PBESol', 'Domains_Transition1x', 'Metals_AgAu_PBED3', 'Others_In2Se3', 'MP_traj_v024_alldata_mixu', 'Alloy_tongqi', 'SSE_ABACUS', 'Hybrid_Perovskite', 'solvated_protein_fragments', 'Electrolyte', 'ODAC23', 'Alex2D', 'Omat24', 'SPICE2', 'OC20M', 'OC22', 'Organic_Reactions', 'RANDOM'], where 'RANDOM' means using a randomly initialized fitting net.

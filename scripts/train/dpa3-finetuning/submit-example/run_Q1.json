@@ -1,0 +1,27 @@
+{
+  "model": {
+    "type": "standard",
+    "type_map": ["N","P"]
+  },
+  "training": {
+    "training_data":   { "systems": ["@train_Q1.txt"], "batch_size": 8 },
+    "validation_data": { "systems": ["@val_systems.txt"],   "batch_size": 8 },
+    "numb_steps": 1850,
+    "disp_file": "lcurve.out",
+    "save_ckpt": "ckpt/ckpt",
+    "save_freq": 600,
+    "disp_freq": 200
+  },
+  "learning_rate": {
+    "type": "exp",
+    "start_lr": 0.0001,
+    "stop_lr": 3e-06,
+    "decay_steps": 1850
+  },
+  "loss": {
+    "type": "ener",
+    "start_pref_e": 0.5,  "limit_pref_e": 1.0,
+    "start_pref_f": 20.0, "limit_pref_f": 1.0,
+    "start_pref_v": 0.0,  "limit_pref_v": 0.0
+  }
+}

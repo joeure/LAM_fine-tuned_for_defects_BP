@@ -1,0 +1,26 @@
+{
+    "outer_log": "process_files/benchmark/recording/calc_BP_spin_High.log",
+    "calculations": [
+        {
+            "reference_systems": [
+                "P"
+            ],
+            "low_high_density": false,
+            "system_name": "BP_spin_500",
+            "parent_directory": "<DEFECT_DATASET_ROOT>",
+            "output_directory": "process_files/data",
+            "model_file": "<DEEPMD_FROZEN_MODEL_PATH>",
+            "log_file": "process_files/benchmark/recording/benchmark.log",
+            "template_file": "templates/in-lammps-temp_relax.jinja",
+            "scripts_directory": "process_files/scripts/benchmark",
+            "ftol_setting": {
+                "basic": "RecordsRelaxedDatasetBP",
+                "mode": "relative",
+                "floor": 0.01,
+                "lower": 0.005,
+                "upper": 0.7,
+                "factor": 1.0
+            }
+        }
+    ]
+}

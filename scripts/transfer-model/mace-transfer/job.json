@@ -1,0 +1,10 @@
+{
+  "job_name": "example_mace_lammps_export",
+  "job_type": "container",
+  "command": "python -m mace.cli.create_lammps_model ./omat_finetune_BP_compiled.model --head omat_definet_ft_head --format libtorch",
+  "backward_files": [],
+  "project_id": 0,
+  "platform": "<CLOUD_PLATFORM>",
+  "machine_type": "<EXAMPLE_MACHINE_TYPE>",
+  "image_address": "<MACE_IMAGE_ADDRESS>"
+}

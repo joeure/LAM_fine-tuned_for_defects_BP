@@ -1,0 +1,22 @@
+{
+    "vasp_roots": [
+        "data/raw-vasp/BP_1014"
+    ],
+    "out_root": "data/DPA3-data",
+    "test_csv": "metadata/test_ids.csv",
+    "val_size": 0.1,
+    "seed": 26,
+    "chunk_strategy": "one",
+    "auto_single_threshold": 5000,
+    "auto_chunk_size": 2000,
+    "type_map": "",
+    "ood_csv": "metadata/ood_per_cif.csv",
+    "ood_col_prefer": "ood_knn_cosine",
+    "ood_col_fallback": "ood_knn_cosine",
+    "shards_dir": "metadata/splits/dpa-3",
+    "ndef_meta_csv": "metadata/BP_defects.csv",
+    "ndef_shards_dir": "metadata/splits_ndef/dpa-3",
+    "dry_run": false,
+    "train_csv": "metadata/train_ids.csv",
+    "val_csv": "metadata/val_ids.csv"
+}

@@ -1,0 +1,4 @@
+ref_name,model,n_atoms,n_local_subs,n_local_vacs,n_local_all,coord_mae_global_A,coord_mae_local_subs_A,coord_mae_local_vacs_A,coord_mae_local_all_A,notes
+P,DPA3,144,9,9,18,0.008860,0.008860,0.008860,0.008860,picked=converged:P
+P,DPA3-OMAT,144,9,9,18,0.008137,0.008137,0.008137,0.008137,picked=converged:P
+P,MACE-OMAT,144,9,9,18,0.005067,0.005067,0.005067,0.005067,picked=converged:P

@@ -1,0 +1,51 @@
+{
+  "neighbor_cutoff_A": 3.2,
+  "ac_zz_ratio_threshold": 1.5,
+  "include_cross_pbc_flag": true,
+  "output_format": "csv",
+
+  "ac_direction_from_cell_vector_index": 1,
+  "zz_direction_from_cell_vector_index": 0,
+
+  "only_splits": ["test", "pristine"],
+  "include_pristine": true,
+  "strict_path_exists": true,
+
+  "pristine_expand_lam_to_supercell": true,
+  "pristine_lam_supercell": [6, 6, 1],
+  "pristine_lam_expected_prim_natoms": 4,
+  "pristine_target_natoms": 144,
+
+  "pristine_reference_path": "../relaxed_structures/BP_1014/P/vasprun.xml",
+  "total_sites": 144,
+
+  "tier1_event": {
+    "nearN_mode": "graph",
+    "escape_mode": "topological",
+
+    "nearN_cutoff_A": 3.0,
+    "escape_far_cutoff_A": 6.0,
+
+    "nearN_graph_hops": 1,
+    "escape_graph_far_hops": 2,
+    "escape_rule": "near_to_not_near",
+
+    "include_labels": ["AC", "ZZ", "MIXED"],
+    "escape_requires_init_nearN": true,
+    "allow_substitution_hops": false
+  },
+  "site_match_check": {
+    "enable": true,
+    "total_sites": 144,
+    "max_assign_dist_A": 2.5,
+    "p95_assign_dist_A": 1.5
+  },
+  "bond_classification": {
+    "mode": "learned",       
+    "k": 2,                  
+    "mixed_angle_deg": 10.0, 
+    "plane": "ab",           
+    "name_by_cell_axis": true,
+    "output_path": "../data_center/learned_directions.json"
+  }
+}

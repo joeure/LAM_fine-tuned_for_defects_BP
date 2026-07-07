@@ -1,0 +1,60 @@
+# ---------- foundation model ----------
+foundation_model: mace-omat-0-medium-fp32.model
+default_dtype: float32 # to avoid OOM of the GPU
+restart_latest: true
+# ---------- heads dictionary ----------
+multiheads_finetuning: true
+heads:
+  omat_definet_ft_head:
+    train_file:   ./MergeBPTrain_fp32.xyz
+    valid_file:   ./MergeBPVal_fp32.xyz
+    test_file:    ./MergeBPTest_fp32.xyz
+    E0s:          ./e0s.json
+    weight:       0.3
+    energy_key:   REF_energy
+    forces_key:   REF_forces
+    stress_key:   REF_stress
+  pt_head:
+    train_file: replay_omat_np_30k_remap_fp32.xyz
+    valid_fraction: 0.05
+    weight: 0.05
+    E0s: foundation  
+    energy_key: REF_energy
+    # subtract_e0: false
+    forces_key: REF_forces
+    stress_key: REF_stress
+
+# ---------- loss weights ----------
+forces_weight:     10
+energy_weight:     8
+stress_weight:     0
+
+# ---------- optimisation ----------
+optimizer:      adam               # ← Adam preferred for FT
+lr: 2.5e-5                         # ↑ faster convergence
+force_mh_ft_lr: true               # override MH default
+lr_scheduler_gamma: 0.958
+scheduler:      ExponentialLR
+
+# turn OFF SWA for now
+swa: false
+
+# turn ON EMA for a short final stage
+ema: true
+ema_decay: 0.9995          # 0.999 ~ 0.9997 works well
+max_num_epochs: 25          # keep your current end epoch
+
+patience:       4
+
+# --- replay subset -------------------------------------------------
+num_samples_pt: 30000             # ← focus on 400 MP traj samples
+subselect_pt:   fps
+
+batch_size: 16
+valid_batch_size: 16
+num_workers: 12                   # single, consistent setting
+r_max: 6.0
+
+# ---------- data ----------
+atomic_numbers: "[89,47,13,18,33,79,5,56,4,83,35,6,20,48,58,17,27,24,55,29,66,68,63,9,26,31,64,32,1,2,72,80,67,53,49,77,19,36,57,3,71,12,25,42,7,11,41,60,10,28,93,8,76,15,91,82,46,61,59,78,94,37,75,45,44,16,51,21,34,14,62,50,38,73,65,43,52,90,22,81,69,92,23,74,54,39,70,30,40]"
+seed:            42  # need to control for uncertainty

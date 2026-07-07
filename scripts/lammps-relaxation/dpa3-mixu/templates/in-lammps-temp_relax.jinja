@@ -1,0 +1,51 @@
+{% for system in system_infos %}
+
+# ======================= Initialization =======================
+units           metal
+atom_style      atomic
+boundary        p p p
+newton          on
+
+neighbor        1.0 bin
+neigh_modify    every 1 delay 0 check yes
+
+# ====================== Read Structure ======================
+read_data       {{ system.structure_file }}
+
+# ===== MACE potential (TorchScript .pt) =====================
+# Use the model file produced by DeepMD/DPA-3 (e.g., graph.pb / model.pb)
+pair_style      deepmd {{ system.model_file }}
+# Mapping atom types -> element symbols (order MUST match your data file types)
+pair_coeff      * * {% for elem in system.elements %}{{ elem }} {% endfor %}
+
+# sanitize a per-system name and make a system-specific folder
+variable        sysname string {{ system.dump_name | replace(' ','_') | replace('/','_') }}
+shell           mkdir -p dumps/${sysname}
+# (works with the built-in 'shell' command)
+
+# write every minimization iteration (incl. the initial & final frames)
+dump            d1 all custom 1 dumps/${sysname}/traj.lammpstrj id type x y z fx fy fz
+dump_modify     d1 first yes sort id
+
+# concise thermo each iteration
+thermo          1
+thermo_style    custom step pe fmax fnorm
+
+# ========================= Minimize ===========================
+reset_timestep  0
+min_style       cg
+min_modify      dmax 0.03 line quadratic
+# etol, ftol, maxiter, maxeval
+minimize        1.0e-8 {{ system.ftol }} 10000 100000
+# NOTE: LAMMPS ftol is an upper bound on any force *component* (eV/Å),
+
+# ======================= Output =============================
+write_data      {{ system.output_file }}
+print           "Relaxation complete for {{ system.system_name }} -> {{ system.output_file }}"
+
+{% if not loop.last %}
+clear
+{% endif %}
+
+{% endfor %}
+print "End for systems bundle: {{ total_name }}."

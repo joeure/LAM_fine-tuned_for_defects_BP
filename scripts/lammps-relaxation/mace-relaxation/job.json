@@ -1,0 +1,10 @@
+{
+  "job_name": "example_mace_lammps_relax_eval",
+  "job_type": "container",
+  "command": "source ./benchmark_batch.sh",
+  "backward_files": [],
+  "project_id": 0,
+  "platform": "<CLOUD_PLATFORM>",
+  "machine_type": "<EXAMPLE_MACHINE_TYPE>",
+  "image_address": "<MACE_LAMMPS_IMAGE_ADDRESS>"
+}
