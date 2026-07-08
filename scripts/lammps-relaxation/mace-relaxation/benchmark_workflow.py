@@ -349,10 +349,12 @@ def benchmarking(parentDir:str, outputParent:str, calculateSystem: SystemDefinit
             )
         logging.info(f"Transferred data files for {dataType.value} with elements: {elements}")
         
-        fmax_csv = f"{fmaxCsvBasic}_{str(dataType)}.csv"
-        dfFMax = pd.read_csv(fmax_csv)
-        if "system_id" not in dfFMax.columns or "fmax_eV_per_A" not in dfFMax.columns:
-            raise ValueError("CSV must contain columns: system_id, fmax_eV_per_A")
+        dfFMax = None
+        if using_dynamic:
+            fmax_csv = f"{fmaxCsvBasic}_{str(dataType)}.csv"
+            dfFMax = pd.read_csv(fmax_csv)
+            if "system_id" not in dfFMax.columns or "fmax_eV_per_A" not in dfFMax.columns:
+                raise ValueError("CSV must contain columns: system_id, fmax_eV_per_A")
         
         systemsInfo.extend(
             SystemInfo(
@@ -475,8 +477,13 @@ def main():
         )
         
         benchmarking(parentDir, outputParent, calculateSystem, modelFile, logFile, templateFile, ScriptsDir,
-                     ftol_setting["basic"], ftol_setting["mode"], ftol_setting["floor"], 
-                     ftol_setting["lower"], ftol_setting["upper"], ftol_setting["factor"], ftol_setting["using_dynamic"])
+                     ftol_setting.get("basic", "fmax_summary"),
+                     ftol_setting.get("mode", "relative"),
+                     ftol_setting["floor"],
+                     ftol_setting.get("lower", 0.005),
+                     ftol_setting.get("upper", 0.7),
+                     ftol_setting.get("factor", 1.0),
+                     ftol_setting.get("using_dynamic", False))
 
 if __name__ == "__main__":
     main()

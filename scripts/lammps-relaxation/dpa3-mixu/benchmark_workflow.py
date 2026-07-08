@@ -320,7 +320,8 @@ def extract_fmax(df:pd.DataFrame, sid:str, mode, floor, lower, upper, factor, sy
     
 def benchmarking(parentDir:str, outputParent:str, calculateSystem: SystemDefinition, 
                  modelFile:str, logFile:str, templateFile:str, ScriptsDir:str, fmaxCsvBasic:str,
-                 mode:str, floor:float, lower:float, upper:float, factor:float):
+                 mode:str, floor:float, lower:float, upper:float, factor:float,
+                 using_dynamic: bool = False):
     refs = dict()
     systemsInfo = list()
     if not os.path.exists(logFile):
@@ -355,10 +356,12 @@ def benchmarking(parentDir:str, outputParent:str, calculateSystem: SystemDefinit
             )
         logging.info(f"Transferred data files for {dataType.value} with elements: {elements}")
         
-        fmax_csv = f"{fmaxCsvBasic}_{str(dataType)}.csv"
-        dfFMax = pd.read_csv(fmax_csv)
-        if "system_id" not in dfFMax.columns or "fmax_eV_per_A" not in dfFMax.columns:
-            raise ValueError("CSV must contain columns: system_id, fmax_eV_per_A")
+        dfFMax = None
+        if using_dynamic:
+            fmax_csv = f"{fmaxCsvBasic}_{str(dataType)}.csv"
+            dfFMax = pd.read_csv(fmax_csv)
+            if "system_id" not in dfFMax.columns or "fmax_eV_per_A" not in dfFMax.columns:
+                raise ValueError("CSV must contain columns: system_id, fmax_eV_per_A")
         
         systemsInfo.extend(
             SystemInfo(
@@ -374,7 +377,7 @@ def benchmarking(parentDir:str, outputParent:str, calculateSystem: SystemDefinit
                                             dataType.value,
                                             "results", f"{systemID}.data"),
                 dump_name=f"{systemID}", 
-                ftol=extract_fmax(dfFMax, systemID, mode, floor, lower, upper, factor, calculateSystem.systemName)
+                ftol=extract_fmax(dfFMax, systemID, mode, floor, lower, upper, factor, calculateSystem.systemName) if using_dynamic else floor
             ) for systemID, element in elements.items() if "unrelaxed" in systemID 
         )
         logging.info(f"Prepared system info for {dataType.value} with {len(systemsInfo)} systems.")
@@ -402,7 +405,7 @@ def benchmarking(parentDir:str, outputParent:str, calculateSystem: SystemDefinit
                                             "low_density_defects" if calculateSystem.lowHighDensity else "high_density_defects",
                                             calculateSystem.systemName, "reference", "results", f"{systemID}.data"),
             dump_name=f"{systemID}",
-            ftol=extract_fmax(dfFMax, calculateSystem.systemName, mode, floor, lower, upper, factor, calculateSystem.systemName)
+            ftol=extract_fmax(dfFMax, calculateSystem.systemName, mode, floor, lower, upper, factor, calculateSystem.systemName) if using_dynamic else floor
         ) for systemID, element in refs.items()
     )
 
@@ -481,8 +484,13 @@ def main():
         )
         
         benchmarking(parentDir, outputParent, calculateSystem, modelFile, logFile, templateFile, ScriptsDir,
-                     ftol_setting["basic"], ftol_setting["mode"], ftol_setting["floor"], 
-                     ftol_setting["lower"], ftol_setting["upper"], ftol_setting["factor"])
+                     ftol_setting.get("basic", "fmax_summary"),
+                     ftol_setting.get("mode", "relative"),
+                     ftol_setting["floor"],
+                     ftol_setting.get("lower", 0.005),
+                     ftol_setting.get("upper", 0.7),
+                     ftol_setting.get("factor", 1.0),
+                     ftol_setting.get("using_dynamic", False))
 
 if __name__ == "__main__":
     main()

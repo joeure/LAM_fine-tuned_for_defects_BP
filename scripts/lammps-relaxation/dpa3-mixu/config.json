@@ -14,12 +14,8 @@
             "template_file": "templates/in-lammps-temp_relax.jinja",
             "scripts_directory": "process_files/scripts/benchmark",
             "ftol_setting": {
-                "basic": "RecordsRelaxedDatasetBP",
-                "mode": "relative",
-                "floor": 0.01,
-                "lower": 0.005,
-                "upper": 0.7,
-                "factor": 1.0
+                "using_dynamic": false,
+                "floor": 0.01
             }
         }
     ]

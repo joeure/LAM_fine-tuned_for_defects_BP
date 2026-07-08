@@ -15,12 +15,7 @@
             "scripts_directory": "process_files/scripts/benchmark",
             "ftol_setting": {
                 "using_dynamic": false,
-                "basic": "RecordsRelaxedDatasetBP",
-                "mode": "relative",
-                "floor": 0.01,
-                "lower": 0.005,
-                "upper": 0.7,
-                "factor": 1.0
+                "floor": 0.01
             }
         }
     ]
