@@ -69,9 +69,12 @@ MACE-compatible `extxyz` files:
 
 These files include energy, force, stress/virial, and periodic-cell metadata in
 the `extxyz` header. Because the full `extxyz` files are 160 MB to 1.3 GB each,
-they are not tracked in the GitHub repository. The expected filenames and local
-checksums are listed in `data/MACE-data/`; the full files should be deposited in
-a DOI-backed data archive and linked here after release.
+they are not tracked in the GitHub repository. They are provided separately via
+the Zenodo data record below; expected filenames and local checksums are listed
+in `data/MACE-data/`.
+
+- Zenodo DOI for MACE `extxyz` files:
+  <https://doi.org/10.5281/zenodo.21253393>
 
 ### `data/src/`
 
@@ -113,9 +116,10 @@ Foundation model files:
 - `models/foundation/DPA-3.1-3M.pt`
 - `models/foundation/mace-omat-0-medium.model`
 
-These upstream foundation weights are not tracked in GitHub; retrieve them from
-the upstream sources listed below and place them under `models/foundation/` for
-local reuse.
+These upstream foundation weights are not tracked in GitHub. Retrieve the
+corresponding model implementations and release information from the upstream
+GitHub repositories listed below, and place local weight files under
+`models/foundation/` only for local reuse.
 
 Fine-tuned model files:
 
@@ -125,19 +129,16 @@ Fine-tuned model files:
 - `models/fine-tuned/frozen-ckpt_DPA3-OMat24.pth`
 - `models/fine-tuned/mace-omat_finetuned_BP_compiled.model`
 
-Before redistributing foundation-model weights, verify the license and usage
-terms of the corresponding upstream model providers.
-
 ### Upstream Model Sources
 
 | Local file | Upstream model/source | Public source |
 | --- | --- | --- |
 | `models/foundation/mace-omat-0-medium.model` | MACE-OMAT-0 medium foundation model. The MACE repositories list MACE-OMAT-0 as a materials foundation model trained on OMAT with DFT PBE+U/VASP labels. | MACE code: <https://github.com/ACEsuit/mace>; MACE foundation models: <https://github.com/ACEsuit/mace-foundations> |
-| `models/foundation/DPA-3.1-3M.pt` | DPA-3.1-3M large atomistic model, implemented in the DeePMD-kit/DPA3 model family. The DPA3 paper describes DPA-3.1-3M as trained on the OpenLAM-v1 collection. | DeePMD-kit code: <https://github.com/deepmodeling/deepmd-kit>; model page used for the public pretrained model: <https://www.aissquare.com/models/detail?id=343&name=DPA-3.1-3M&pageType=models> |
+| `models/foundation/DPA-3.1-3M.pt` | DPA-3.1-3M large atomistic model, implemented in the DeePMD-kit/DPA3 model family. The DPA3 paper describes DPA-3.1-3M as trained on the OpenLAM-v1 collection. | DeePMD-kit code: <https://github.com/deepmodeling/deepmd-kit> |
 
 The MACE-OMAT-0 release is distributed under the license stated by the MACE
 foundation-model repository. DeePMD-kit is distributed under LGPL-3.0; check the
-pretrained DPA-3.1-3M model page and upstream paper for weight-specific terms.
+upstream model release information and paper for weight-specific terms.
 
 ## Results
 
@@ -229,16 +230,15 @@ environment and release metadata have been finalized.
 
 ## Large Files
 
-Several data files are larger than GitHub's normal single-file limit. For a
-public GitHub release, use Git LFS, GitHub Releases, or a DOI-backed data
-archive such as Zenodo/Figshare/Materials Data Facility, and keep this
-repository as the documented entry point.
+Several data files are larger than GitHub's normal single-file limit. For this
+GitHub snapshot, the large MACE `extxyz` files under `data/MACE-data/` are
+excluded from Git and represented by `data/MACE-data/README.md` plus
+`data/MACE-data/SHA256SUMS`. The full MACE files are archived separately at:
 
-For this GitHub snapshot, the large MACE `extxyz` files under `data/MACE-data/`
-are excluded from Git and represented by `data/MACE-data/README.md` plus
-`data/MACE-data/SHA256SUMS`. Fine-tuned model files are currently below
-GitHub's hard 100 MiB per-file limit, but DOI-backed archival is still
-recommended for the final publication release.
+- <https://doi.org/10.5281/zenodo.21253393>
+
+Fine-tuned model files are currently below GitHub's hard 100 MiB per-file limit
+and are tracked directly in this repository.
 
 ## Citation
 
